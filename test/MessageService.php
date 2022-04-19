@@ -6,14 +6,14 @@
 
     class MessageService { 
         private $connection = NULL;
-        private $htmltemplate = NULL;
-
+        private $twig = NULL;
 
         function __construct() {
             $databaseConnection = new DatabaseConnection();
             $this->connection = $databaseConnection->getConnection();
 
-            $this->htmltemplate = new HTMLTemplate();
+            $loader = new \Twig\Loader\FilesystemLoader('templates');
+            $this->twig = new \Twig\Environment($loader);
 
         }
         public function deleteMessage($id) {
@@ -41,7 +41,7 @@
                 
                 $link = "http://localhost/test/readMessage.php?id=".$id;
 
-                $this->htmltemplate->saveMessageHTML($link);
+                echo $this->twig->render('saveMessage.html', ['link' => $link] );
             }
             catch(PDOException $e) {
                 echo "Error" . $e->getMessage();
@@ -67,15 +67,11 @@
             } else {
               $messageIsDeletedText = "Somehow your message was not deleted";
             }
-            $this->htmltemplate->readMessageHTML($message, $messageIsDeletedText);
+            echo $this->twig->render('readMessage.html', ['message' => $message, 'messageIsDeletedText' => $messageIsDeletedText] );
         }
         catch(PDOException $e) {
             echo "Error" . $e->getMessage();
         }
         
     }
-
-
-
-
-?>
+  }

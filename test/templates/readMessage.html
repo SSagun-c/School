@@ -1,0 +1,18 @@
+{% extends "messageBase.html" %}
+
+{% block head %}
+
+{{ parent() }}
+
+{% endblock %}
+
+{% block content %}
+{% autoescape %}
+<div style="width: 800px; margin: 0 auto">
+    <h1>Heres your text</h1>
+    <p>{{message|raw}}</p>
+    <p class="text-info">{{messageIsDeletedText}}</p>
+
+</div>
+{% endautoescape %}
+{% endblock %}

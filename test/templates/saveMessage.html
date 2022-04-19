@@ -1,0 +1,31 @@
+{% extends "messageBase.html" %}
+
+{% block head %}
+
+{{ parent() }}
+
+<script>
+                
+    function copyToClipboard(link) {
+
+      navigator.clipboard.writeText(link).then(() => {
+      }).catch(err => {
+      })
+
+      
+    }
+</script>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="row" style="margin-top: 100px">
+    <div class="span6" style="float: none; margin: 0 auto;">
+      <p>Copy the link to your message</p>
+      <button class="btn btn-primary" onClick="copyToClipboard('{{ link }}')">
+      <span class="fa-solid fa-copy"></span>
+      Copy</button>
+      </div>
+</div>
+{% endblock %}
